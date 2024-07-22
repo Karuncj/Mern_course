@@ -6,22 +6,6 @@ app.get('/v1/users', async (req, res) => {
     res.send(users);
 });
 
-app.get('/v1/users/:id',async(req,res)=>{
-    try{
-    const id=req.params.id;
-    const users=await userModels.findbyId(id);
-    if (users){
-        console.log(users);
-        res.send(users);
-    }else{
-    res.status(404).end();
-    }
-}
-catch(err){
-    console.log(err);
-    res.status(500).end();
-}
-})
 
  app.get('/v1/users/:id', async (req, res) => {
     try {
@@ -40,20 +24,6 @@ catch(err){
   });
 
 
-// app.post('/v1/users',async(req,res)=>{
-//     try{
-//         const user=await userModels.create(req.body);
-//         console.log(req.body);
-//     if(user){
-//         res.status(200).end();
-//     }
-// }
-//     catch(err){
-//         console.log(err);
-//         res.status(500).end();
-//     }
-
-// })
  // Create a new user
  app.post('/v1/users', async (req, res) => {
     try {
@@ -67,18 +37,21 @@ catch(err){
   });
 
 app.put('/v1/users/:id',async(req,res)=>{
+  try{  
     const user=await userModels.findByIdAndUpdate(
         req.params.id,
         req.body,
-    (err)=>{
-        if(err){   
-            res.status(500).end();
-        }
-        else{
-            res.status(200).end();
-        }
-    });
-})
+        {new:true}
+    );
+    if (!user) {
+      return res.status(404).send('User not found');
+    }
+    console.log(user);
+    res.send(user);
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+});
 
 app.delete('/v1/users/:id',(req,res)=>{
     const id=req.body.id;
