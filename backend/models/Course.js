@@ -1,9 +1,10 @@
-import mongoose from "mongoose";
-import { Schema } from "mongoose";
+import mongoose, { Schema } from 'mongoose';
 
-const course=new Schema({
-    name:{type:"String",required:true},
-    weight:{type:"Number",required:true},
-    image:{type:"String",required:true},
-})
-export const courseModels=mongoose.model("course",course)
+export const CourseSchema = new Schema({
+  name: String,
+  types: [String],
+  images: [String],
+  price: Number,
+});
+
+export const CourseModel = mongoose.model('Course', CourseSchema);

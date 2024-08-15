@@ -1,8 +1,8 @@
-import mongoose from 'mongoose';
-import {Schema} from 'mongoose';
+import mongoose, { Schema } from 'mongoose';
 
-const user=new Schema({
-    user: {type: String, required: false},
-    city: {type: String, required: false}
+export const UserSchema = new Schema({
+  user: String,
+  city: String,
 });
-export const userModels=mongoose.model('user',user);    
+
+export const UserModel = mongoose.model('User', UserSchema);

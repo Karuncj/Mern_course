@@ -1,81 +1,66 @@
-import {userModels} from '../models/User.js';
+import { UserModel } from '../models/User';
 
-export default(app) => {
-app.get('/v1/users', async (req, res) => {
-    const users = await userModels.find();
+export default (app) => {
+  /*
+  *  this is the users API (v1)
+  */
+  // GET users
+  app.get('/v1/users', async (req, res) => {
+    const users = await UserModel.find() || []; // fallback to an empty array
     res.send(users);
-});
+  });
 
-
- app.get('/v1/users/:id', async (req, res) => {
+  // GET user by id
+  app.get('/v1/users/:id', async (req, res) => {
     try {
-      const id = req.params.id;
-      const user = await userModels.findById(id);
+      const user = await UserModel.findById(req.params.id);
       if (user) {
-        console.log(user);
         res.send(user);
       } else {
-        res.status(404).send('User not found');
+        res.status(404).end();
       }
-    } catch (err) {
-      console.error(err);
-      res.status(500).send('Internal Server Error');
+    } catch (e) {
+      res.status(404).end();
     }
   });
 
-
- // Create a new user
- app.post('/v1/users', async (req, res) => {
-    try {
-        console.log(req.body);
-      const user = await userModels.create(req.body);
-      res.status(201).send(user);
-    } catch (err) {
-      console.error(err);
-      res.status(500).send('Internal Server Error');
+   // POST users
+   app.post('/v1/users', async (req, res) => {
+    const user = await UserModel.create(req.body);
+    if (user) {
+      res.status(200).end();
+    } else {
+      res.status(500).end();
     }
   });
 
-app.put('/v1/users/:id',async(req,res)=>{
-  try{  
-    const user=await userModels.findByIdAndUpdate(
-        req.params.id,
-        req.body,
-        {new:true}
+  // PUT users by id
+  app.put('/v1/users/:id', async (req, res) => {
+    const user = await UserModel.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      (err) => {
+        if (err) {
+          res.status(500).end();
+        } else {
+          res.status(200).end();
+        }
+      }
     );
-    if (!user) {
-      return res.status(404).send('User not found');
-    }
-    console.log(user);
-    res.send(user);
-  } catch (error) {
-    res.status(500).send(error.message);
-  }
-});
+  });
 
-app.delete('/v1/users/:id',(req,res)=>{
-    const id=req.body.id;
-    const name=req.body.name;
-    const city=req.body.city;
-    const msg='delete:data =>'+' '+ id+ ' '+ name+' '+city+ ' ';
-    console.log(msg);
-    res.status(200).end();
-})
-
-app.delete("/v1/users",async(req,res)=>
-{
-    try{
-    const user=req.body.user;
-    const city=req.body.city;
-    if(!user && !city){
-        const users = await userModels.deleteMany({ user: { $exists: false }, city: { $exists: false } });
-        console.log(users);
-        res.status(200).end();
-    }
-}
-    catch(err){
-        console.log(err);
-        res.status(500).end();
-}
-});
+  // DELETE users by id
+  app.delete('/v1/users/:id', async (req, res) => {
+    const user = await UserModel.findByIdAndDelete(
+      req.params.id,
+      req.body,
+      (err) => {
+        if (err) {
+          res.status(500).end();
+        } else {
+          res.status(200).end();
+        }
+      }
+    );
+  });
 }

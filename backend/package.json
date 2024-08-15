@@ -4,25 +4,26 @@
   "private": true,
   "description": "",
   "main": "index.js",
-  "type": "module",
   "scripts": {
-    "start":"nodemon --inspect ./index.js --exec babel-node",
+    "start": "nodemon --inspect ./index.js --exec babel-node",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dbinit":"nodemon --inspect ./scripts/dbinit.js --exec babel-node"
+    "dbinit": "nodemon --inspect ./scripts/dbinit.js --exec babel-node"
   },
   "keywords": [],
-  "author": "karun",
+  "author": "JK",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.19.2",
-    "mongoose": "^8.5.1"
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "mongoose": "^5.6.13"
   },
   "devDependencies": {
-    "@babel/cli": "^7.24.8",
-    "@babel/core": "^7.24.9",
-    "@babel/node": "^7.24.8",
-    "@babel/preset-env": "^7.24.8",
+    "@babel/cli": "^7.5.5",
+    "@babel/core": "^7.25.2",
+    "@babel/node": "^7.25.0",
+    "@babel/preset-env": "^7.25.3",
     "@babel/preset-react": "^7.24.7",
-    "nodemon": "^3.1.4"
+    "nodemon": "^1.19.4"
   }
 }

@@ -1,0 +1,29 @@
+  .User {
+    margin: 0 auto;
+    padding-top: 30px;
+  }
+
+  .User form button {
+    background: #007bff;
+    border: none;
+    color: #ffffff;
+    font-size: 14px;
+    height: 40px;
+    width: 100px;
+  }
+
+  .User .error {
+    border: 2px solid red;
+  }
+
+  .User .errorMessage {
+    color: red;
+    font-size: 12px;
+  }
+
+  .User form input {
+    border: 1px solid #dddddd;
+    font-size: 14px;
+    height: 30px;
+    width: 200px;
+  }

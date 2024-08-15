@@ -1,17 +1,18 @@
 import express from 'express';
-import bodyparser from 'body-parser';
-import users from './mocks/users.js';
-import db from './db/db.js';
-import userRoutes from './routes/users.js';
-import courseRoutes from './routes/courses.js';
+import bodyParser from 'body-parser';
+import courseRoutes from './routes/courses';
+import userRoutes from './routes/users';
+import cors from 'cors';
+import db from './db/db';
 
 const app = express();
-app.use(bodyparser.json());
-app.use(bodyparser.urlencoded({ extended: true }));
-const PORT = 80;
+app.use(cors());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+const port = 80;
 courseRoutes(app);
 userRoutes(app);
 
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
-});
+app.listen(port, () =>
+  console.log(`Express is listening on port ${port}!`)
+);
